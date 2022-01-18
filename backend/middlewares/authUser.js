@@ -2,6 +2,7 @@ const User = require('../models/userModel');
 const generateToken = require('../utils/generateToken');
 const jwt = require('jsonwebtoken');
 
+//USer Authentication and Authorization using email and Password
 exports.authUser = async(req,res) => {
     const { email, password} = req.body;
 
@@ -19,11 +20,11 @@ exports.authUser = async(req,res) => {
         })
     } else {
         res.status(404).json({message: "INVALID Email and Password"});
-        
     }
 
 }
 
+//Get details of logged in user using bearer TOKEN
 exports.protect = async(req,res,next) => {
     let token
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer')){

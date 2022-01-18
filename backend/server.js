@@ -1,46 +1,63 @@
+//1. Import required node modules
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
 
+const connectDB = require('./config/db');
+
+//2. Importing all the necessary routes
 const userRoutes = require('./routes/userRoutes');
 const modelOperations = require('./routes/modelRoutes');
 const dataOperations = require('./routes/dataRoutes');
 const uploadRoutes = require('./routes/uploadRoute');
 
+//3. Initialise express
 const app = express();
 
+//6. For removing Errors
 app.use(express.json());
 app.use(express.urlencoded({ extended: false}));
 app.use(cors()); 
+dotenv.config();
 
-mongoose.connect('mongodb://localhost/bookstoretesting', {
-    useNewUrlParser: true, useUnifiedTopology: true
-});
+//7. Connect to a mongodb database
+connectDB()
 
-mongoose.connection.on('open', function(ref){
-    console.log("Database Connected");
+//7. Connect to a local database
+// mongoose.connect('mongodb://localhost/bookstoretesting', {
+//     useNewUrlParser: true, useUnifiedTopology: true
+// });
+// //7(A) - After Connection
+// mongoose.connection.on('open', function(ref){
+//     console.log("Database Connected");
     
-    //Getting List of all the collections
-    mongoose.connection.db.listCollections().toArray(function(err, names) {
-        console.log("Collections: ")
-        names.forEach((name, index) => {
-            console.log(index + ". " + name.name);
-        }); 
+//     //7(B) - Getting List of all the collections
+//     mongoose.connection.db.listCollections().toArray(function(err, names) {
+//         console.log("Collections: ")
+//         names.forEach((name, index) => {
+//             console.log(index + ". " + name.name);
+//         }); 
         
-    })
-})
+//     })
+// })
 
-//User Routes
+//8 - Create routes for performing different functionality
+
+//8(A) - Users Route 
 app.use('/user', userRoutes);
-//ALL model operations to be performed on this route
+//8(B) - ALL model operations to be performed on this route
 app.use('/modeloperations', modelOperations);
-//ALL data operations to be performed on this route
+//8(C) -ALL data operations to be performed on this route
 app.use('/data', dataOperations);
-//For media uploads
+//8(D) -For media uploads
 app.use('/mediaUploads', uploadRoutes);
 
+//5. Test the Server
 app.get('/', (req,res) => {
     res.send("Testing the server running on port 9090")
 })
 
-app.listen(9090, console.log("Server Started On Port 9090")) 
+//4. Start the Server
+const PORT = process.env.PORT || 9090
+app.listen(PORT, console.log(`Server Started On PORT ${PORT}`)) 
