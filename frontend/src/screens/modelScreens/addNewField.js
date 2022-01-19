@@ -3,8 +3,11 @@ import axios from 'axios';
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "react-bootstrap";
+import Domain from '../../components/domain';
 
 const AddNewField = () => {
+
+    const domainName = Domain()
     //1. Params for getting Modelname and navigate to go back to previous page when submitted
     let params = useParams();
     let navigate = useNavigate()
@@ -38,7 +41,7 @@ const AddNewField = () => {
         }
 
         //6. Send PUT request to update schema
-        axios.put(`http://localhost:9090/modeloperations/updateSchema/${params.modelName}`, newField, config)
+        axios.put(`${domainName}/modeloperations/updateSchema/${params.modelName}`, newField, config)
         .then(response => {
             console.log(response.data);
         })

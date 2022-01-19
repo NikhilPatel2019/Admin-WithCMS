@@ -2,13 +2,15 @@ import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
+import Domain from '../../components/domain';
 
 const DisplayAllModels = () => {
+    const domainName = Domain()
 
     let [ models, setModels ] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:9090/modeloperations/all')
+        axios.get(`${domainName}/modeloperations/all`)
         .then(response => {
             setModels(response.data)
             console.log(models)
@@ -22,7 +24,7 @@ const DisplayAllModels = () => {
         console.log(id)
         models.splice(index,1);
         setModels([...models]);
-        axios.delete(`http://localhost:9090/modeloperations/deleteSchema/${id}`)
+        axios.delete(`${domainName}/modeloperations/deleteSchema/${id}`)
         .then(response => {
             console.log(response)
         })
@@ -35,9 +37,9 @@ const DisplayAllModels = () => {
                     <Button>Go Back</Button>
                 </Link>
             
-            <h1 style={{"text-align": "center"}}>ALL MODELS</h1>
+            <h1 style={{"textAlign": "center"}}>ALL MODELS</h1>
 
-            <div style={{"text-align": "center"}}>
+            <div style={{"textAlign": "center"}}>
                 <Link to="/models/addNewModel">  
                     <Button>Add New Model</Button>
                 </Link>

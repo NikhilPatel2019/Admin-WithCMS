@@ -3,10 +3,12 @@ import { useNavigate } from 'react-router'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-bootstrap';
-
+import Domain from '../../components/domain';
 
 const UploadBook = () => {
     let navigate = useNavigate();
+
+    const domainName = Domain()
 
     //2. Storing schema in <model>, input data in <data> and model ID in <id>
     let [ model, setModel ] = useState({});
@@ -15,7 +17,7 @@ const UploadBook = () => {
 
     useEffect(() => {
         //3. Getting schema by modelname - needed for form building
-        axios.get(`http://localhost:9090/modeloperations/bookDetails`)
+        axios.get(`${domainName}/modeloperations/bookDetails`)
         .then(response => {
             setId(response.data._id);
             setModel({...response.data})
@@ -64,8 +66,8 @@ const UploadBook = () => {
                     }
                 }
 
-                const pathReceived  = await axios.post('http://localhost:9090/mediaUploads/image', formData, config );
-                const fileLocation = `http://localhost:9090/${pathReceived.data}`;
+                const pathReceived  = await axios.post(`${domainName}/mediaUploads/image`, formData, config );
+                const fileLocation = `${domainName}/${pathReceived.data}`;
                 let newValue = { [e.target.name]: `${fileLocation}`}
                 console.log(newValue)
                 setData({...data, ...newValue})
@@ -99,7 +101,7 @@ const UploadBook = () => {
         console.log(updatedData)
 
         //8(b) - Update data
-        axios.post(`http://localhost:9090/data/post/bookDetails`, updatedData)
+        axios.post(`${domainName}/data/post/bookDetails`, updatedData)
         .then(response => {
             console.log(response)
         })

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import {Link } from 'react-router-dom';
 import { useNavigate } from 'react-router';
-import { Form, Button, Row, Col } from 'react-bootstrap';
+import { Form, Button } from 'react-bootstrap';
 import FormContainer from '../components/formContainer';
 import Message from '../components/Message';
-import axios from 'axios'
+import axios from 'axios';
+import Domain from '../components/domain';
 
 const LoginScreen = (  ) => {
     let navigate = useNavigate();
@@ -14,6 +14,8 @@ const LoginScreen = (  ) => {
     const [message, setMessage] = useState();
     const adminInfo = localStorage.getItem('adminInfo');
     const admin = JSON.parse(adminInfo)
+    
+    const domainName = Domain()
 
     useEffect(() => {
         //This is force redirect
@@ -34,7 +36,7 @@ const LoginScreen = (  ) => {
          }
 
          if(password && email){
-         axios.post('http://localhost:9090/user/login', loginDetails)
+         axios.post(`${domainName}/user/login`, loginDetails)
          .then( response => {
              console.log(response);
              if(response.status === 200){

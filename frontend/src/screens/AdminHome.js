@@ -4,7 +4,7 @@ const AdminHome = () => {
     return (
         <div>
             <Link to='/models'>
-                <h1>Model</h1>
+                <h1>Manage Models</h1>
             </Link>
             {/* <Link to='/data'>
                 <h1>Data</h1>

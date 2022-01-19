@@ -3,10 +3,13 @@ import { useNavigate } from 'react-router'
 import axios from 'axios';
 import { Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import Domain from '../../components/domain';
 
 const NewModel = () => {
     //1. Use Navigate to go to allModels route after submitting schema
     let navigate = useNavigate();
+
+    const domainName = Domain()
 
     //2. fields to record all the fields submitted
     const [ fields, setFields ] = useState([])
@@ -90,7 +93,7 @@ const NewModel = () => {
         console.log(dataToSend);
 
         //11(F) - Sending data to back-end
-        axios.post(`http://localhost:9090/modeloperations/createSchema`, dataToSend)
+        axios.post(`${domainName}/modeloperations/createSchema`, dataToSend)
         .then(response => {
             console.log(response)
         })

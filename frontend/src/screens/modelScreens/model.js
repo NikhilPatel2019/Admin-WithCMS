@@ -3,9 +3,10 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useParams } from 'react-router';
 import { Button } from 'react-bootstrap';
+import Domain from '../../components/domain';
 
 function Model() {
-
+    const domainName = Domain()
     //1. Getting the model names from parameters passed
     let params = useParams();
     const modelName = params.modelName;
@@ -16,7 +17,7 @@ function Model() {
 
     //3. Requesting Schema by Model Name and storing it in <model>
     useEffect(() => {
-        axios.get(`http://localhost:9090/modeloperations/${modelName}`)
+        axios.get(`${domainName}/modeloperations/${modelName}`)
         .then(response => {
             setModel({...response.data})
             console.log(model)

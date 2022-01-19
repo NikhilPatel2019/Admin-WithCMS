@@ -5,12 +5,15 @@ import FormContainer from '../components/formContainer';
 import Message from '../components/Message';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import Domain from '../components/domain';
 
 const SignUpScreen = (  ) => {
     let navigate = useNavigate();
 
     const adminInfo = localStorage.getItem('adminInfo');
     const admin = JSON.parse(adminInfo)
+
+    const domainName = Domain()
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -44,7 +47,7 @@ const SignUpScreen = (  ) => {
                 'password': password
             }
             console.log(user);
-            axios.post('http://localhost:9090/user/register', user)
+            axios.post(`${domainName}/user/register`, user)
             .then(response => {
                 if(response.data === "user already exists"){
                     setMessage("User Already Registered")
