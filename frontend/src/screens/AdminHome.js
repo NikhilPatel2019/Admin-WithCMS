@@ -6,9 +6,9 @@ const AdminHome = () => {
             <Link to='/models'>
                 <h1>Manage Models</h1>
             </Link>
-            {/* <Link to='/data'>
-                <h1>Data</h1>
-            </Link> */}
+            <Link to='/data'>
+                <h1>Manage Data</h1>
+            </Link>
         </div>
     )
 }

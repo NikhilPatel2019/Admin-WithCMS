@@ -1,7 +1,6 @@
 //1. Import required node modules
 const express = require('express');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
 const connectDB = require('./config/db');
@@ -52,6 +51,11 @@ app.use('/modeloperations', modelOperations);
 app.use('/data', dataOperations);
 //8(D) -For media uploads
 app.use('/mediaUploads', uploadRoutes);
+
+//Making upload folder static for uploading a media files.
+//Making folder static so it can be accessed
+// const __dirname = path.resolve();
+app.use('/uploads', express.static(path.join(__dirname, '/uploads')))
 
 //5. Test the Server
 app.get('/', (req,res) => {
